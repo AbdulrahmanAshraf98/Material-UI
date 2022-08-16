@@ -3,11 +3,14 @@ import { Route, Routes } from "react-router-dom";
 import Notes from "./Pages/Notes";
 import Create from "./Pages/Create";
 import { createTheme, ThemeProvider } from "@mui/material";
-import { orange } from "@mui/material/colors";
+import { green, orange } from "@mui/material/colors";
 const globalTheme = createTheme({
 	palette: {
 		primary: {
 			main: orange[500],
+		},
+		secondary: {
+			main: green[300],
 		},
 	},
 	typography: {
