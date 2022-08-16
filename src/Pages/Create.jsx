@@ -1,4 +1,14 @@
-import { Button, Container, TextField, Typography } from "@mui/material";
+import {
+	Button,
+	Container,
+	FormControl,
+	FormControlLabel,
+	FormLabel,
+	Radio,
+	RadioGroup,
+	TextField,
+	Typography,
+} from "@mui/material";
 import React, { useCallback, useState } from "react";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import "./Create.style.css";
@@ -6,13 +16,20 @@ const Create = () => {
 	const [formField, setFormField] = useState({
 		title: { value: "", error: "" },
 		details: { value: "", error: "" },
+		Category: "",
 	});
 
-	const TextFieldHandler = useCallback((event) => {
+	const textFieldHandler = useCallback((event) => {
 		const { id, value } = event.target;
 		setFormField((prevState) => ({
 			...prevState,
 			[id]: { value: value, error: "" },
+		}));
+	}, []);
+	const radioButtonOnChangeHandler = useCallback((event) => {
+		setFormField((prevState) => ({
+			...prevState,
+			Category: event.target.value,
 		}));
 	}, []);
 	const submitHandler = (event) => {
@@ -89,7 +106,7 @@ const Create = () => {
 				<TextField
 					id="title"
 					label="NoteTitle"
-					className="textfield"
+					className="field"
 					variant="outlined"
 					color="secondary"
 					defaultValue={formField.title.value}
@@ -98,12 +115,11 @@ const Create = () => {
 					sx={{}}
 					fullWidth
 					required
-					gutterbottom
-					onChange={TextFieldHandler}
+					onChange={textFieldHandler}
 				/>
 				<TextField
 					label="details"
-					className="textfield"
+					className="field"
 					id="details"
 					variant="outlined"
 					color="secondary"
@@ -114,8 +130,21 @@ const Create = () => {
 					rows={4}
 					fullWidth
 					required
-					onChange={TextFieldHandler}
+					onChange={textFieldHandler}
 				/>
+				<FormControl className="field" fullWidth>
+					<FormLabel>Note Category</FormLabel>
+					<RadioGroup onChange={radioButtonOnChangeHandler}>
+						<FormControlLabel value="money" control={<Radio />} label="Money" />
+						<FormControlLabel value="todos" control={<Radio />} label="Todos" />
+						<FormControlLabel
+							value="reminders"
+							control={<Radio />}
+							label="Reminders"
+						/>
+						<FormControlLabel value="work" control={<Radio />} label="Work" />
+					</RadioGroup>
+				</FormControl>
 				<Button
 					type="submit"
 					color="secondary"
