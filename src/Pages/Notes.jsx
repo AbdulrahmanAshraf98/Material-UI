@@ -4,7 +4,9 @@ import React from "react";
 const Notes = () => {
 	return (
 		<>
-			<Typography variant="h1">Notes</Typography>
+			<Typography variant="h1" color="primary">
+				Notes
+			</Typography>
 		</>
 	);
 };
