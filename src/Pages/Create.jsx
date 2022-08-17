@@ -12,11 +12,13 @@ import {
 import React, { useCallback, useState } from "react";
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 import "./Create.style.css";
+import { useNavigate } from "react-router-dom";
 const Create = () => {
+	let navigate = useNavigate();
 	const [formField, setFormField] = useState({
 		title: { value: "", error: "" },
 		details: { value: "", error: "" },
-		Category: "",
+		category: "",
 	});
 
 	const textFieldHandler = useCallback((event) => {
@@ -29,10 +31,10 @@ const Create = () => {
 	const radioButtonOnChangeHandler = useCallback((event) => {
 		setFormField((prevState) => ({
 			...prevState,
-			Category: event.target.value,
+			category: event.target.value,
 		}));
 	}, []);
-	const submitHandler = (event) => {
+	const submitHandler = async (event) => {
 		event.preventDefault();
 
 		if (
@@ -91,6 +93,19 @@ const Create = () => {
 
 			return;
 		}
+		const newNote = {
+			title: formField.title.value,
+			details: formField.details.value,
+			category: formField.category,
+		};
+
+		const response = await fetch("http://localhost:8000/notes", {
+			method: "post",
+			headers: { "content-type": "application/json" },
+			body: JSON.stringify(newNote),
+		});
+
+		navigate("/");
 	};
 	return (
 		<Container>
