@@ -12,6 +12,9 @@ const globalTheme = createTheme({
 		secondary: {
 			main: green[300],
 		},
+		text: {
+			primary: "#fff",
+		},
 	},
 	typography: {
 		fontFamily: "sans-serif",
