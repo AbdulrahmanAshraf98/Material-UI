@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Container, Grid, Paper, styled, Typography } from "@mui/material";
-
-const Item = styled(Paper)(({ theme }) => ({
-	...theme.typography.body2,
-	textAlign: "center",
-	color: theme.palette.text.primary,
-	backgroundColor: theme.palette.primary.main,
-	height: 60,
-	lineHeight: "60px",
-}));
+import { Container, Grid } from "@mui/material";
+import NoteCard from "../Components/NoteCard/NoteCard";
 
 const Notes = () => {
 	const [notes, setNotes] = useState([]);
@@ -17,23 +9,22 @@ const Notes = () => {
 		const responseData = await response.json();
 		setNotes(responseData);
 	};
+	const deleteNoteHandler = async (noteId) => {
+		const response = await fetch(`http://localhost:8000/notes/${noteId}`, {
+			method: "DELETE",
+			headers: { "content-type": "application/json" },
+		});
+	};
 	useEffect(() => {
 		getNotes();
-	}, []);
+	}, [notes]);
 	return (
 		<div className="notes">
 			<Container>
-				<Grid container spacing={2} alignItems="center">
+				<Grid container spacing={3} alignItems="center">
 					{notes.map((note) => (
-						<Grid item key={note.id} xs={12} sm={6} md={4} xl={3}>
-							<Item
-								id={note.id}
-								variant="outlined"
-								square
-								elevation={16}
-								color="primary">
-								{note.title}
-							</Item>
+						<Grid item key={note.id} xs={12} sm={6}>
+							<NoteCard note={note} deleteNoteHandler={deleteNoteHandler} />
 						</Grid>
 					))}
 				</Grid>
